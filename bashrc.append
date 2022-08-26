@@ -1,0 +1,4 @@
+
+if [ -f ~/.bashrc.salmin ]; then
+    . ~/.bashrc.salmin
+fi

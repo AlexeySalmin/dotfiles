@@ -1,0 +1,5 @@
+pullsshsock
+
+case $PWD in $HOME/*)
+    HISTFILE="$PWD/.bash_history.$WINDOW"
+esac

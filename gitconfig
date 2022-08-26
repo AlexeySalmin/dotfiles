@@ -1,0 +1,8 @@
+[user]
+	name = Alexey Salmin
+	email = alexey.salmin@gmail.com
+[alias]
+	st = status
+	ci = commit
+[push]
+	default = simple

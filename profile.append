@@ -1,0 +1,4 @@
+
+if [ -f ~/.profile.salmin ]; then
+    . ~/.profile.salmin
+fi

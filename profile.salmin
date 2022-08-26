@@ -1,0 +1,15 @@
+# fix ssh_config permissions
+fix-ssh-config-mode
+
+case "$-" in *i*)
+    # interactive shell
+    [ -x "`which screen`" ] && screen -list
+
+    if [ -f "$HOME/.ssh/id_rsa" -a -x "`which keychain`" ]; then
+        # there's a local key, adding it to keychain
+        eval `keychain --quiet --eval id_rsa`
+    fi
+esac
+
+# if there's a local or forwarded SSH agent then share it
+pushsshsock

@@ -1,0 +1,13 @@
+# this file depends on aliases and functions defined in .bash_aliases
+
+rmpath /usr/games
+rmpath /usr/local/games
+
+# I want UTF-8 and support for russian input, but not the locale
+export LANG="en_US"
+export LC_ALL="en_US.UTF-8"
+
+# pull shared SSH sock for all screen sessions
+if [ ! -z "$STY" -a -f ~/.bashrc.screen ] ; then
+    . ~/.bashrc.screen
+fi
