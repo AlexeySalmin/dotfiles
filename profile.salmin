@@ -6,7 +6,7 @@ case "$-" in *i*)
         # there's a local key, adding it to keychain
         eval `keychain --quiet --eval id_rsa`
     fi
-esac
 
-# if there's a local or forwarded SSH agent then share it
-pushsshsock
+    # if there's a local or forwarded SSH agent then share it
+    pushsshsock
+esac
