@@ -1,6 +1,3 @@
-# fix ssh_config permissions
-fix-ssh-config-mode
-
 case "$-" in *i*)
     # interactive shell
     [ -x "`which screen`" ] && screen -list

@@ -70,4 +70,7 @@ append_file() {
     else
         link_file "$src" "$dst"
     fi
+    case "$f" in ./ssh/config*)
+        $RUN chmod -c 600 "$dst"
+    esac
 done

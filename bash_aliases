@@ -80,12 +80,6 @@ ssh-persist() {
     fi
 }
 
-fix-ssh-config-mode() {
-    if [ -f "$HOME/.ssh/config" ] ; then
-        chmod -c 600 "$HOME/.ssh/config"*
-    fi
-}
-
 svndiff() {
     svn diff --diff-cmd=colordiff "$@" | $LESS_F -R
 }
