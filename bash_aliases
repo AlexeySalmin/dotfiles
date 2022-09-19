@@ -14,8 +14,17 @@ export GREP_COLORS='mt=1;32:ne'
 
 LESS_VERSION="$(less --version | sed -n -e 's/less \([0-9]\+\) .*/\1/p')"
 LESS_F=$( [ "$LESS_VERSION" -ge 530 ] && echo "less --quit-if-one-screen" || echo "less")
+
 g() {
     `which grep` --color=always "$@" | $LESS_F -R
+}
+
+gr() {
+    g -r "$@"
+}
+
+gre() {
+    g -r --exclude-dir venv --exclude-dir .svn --exclude-dir .git --exclude "*.pyc" "$@"
 }
 
 export EDITOR=vim
@@ -75,13 +84,6 @@ fix-ssh-config-mode() {
     if [ -f "$HOME/.ssh/config" ] ; then
         chmod -c 600 "$HOME/.ssh/config"*
     fi
-}
-
-grepfiles() {
-    regex="$1" ; shift
-    where="$1" ; shift
-    [ ! -z "$where" ] || where="."
-    find "$where" -type f ! -path "*/.svn/*" -print0 | xargs -0 grep "$regex"
 }
 
 svndiff() {
