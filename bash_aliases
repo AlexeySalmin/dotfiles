@@ -27,6 +27,10 @@ gre() {
     g -r --exclude-dir venv --exclude-dir .svn --exclude-dir .git --exclude "*.pyc" "$@"
 }
 
+d() {
+    colordiff "$@" | $LESS_F -R
+}
+
 export EDITOR=vim
 export VISUAL=vim
 
@@ -90,6 +94,17 @@ svninf() {
 
 pastecol() {
     paste -d '|' "$@" | column -t -s '|'
+}
+
+vactivate() {
+    if [ -n "$VIRTUAL_ENV" -a -f "$VIRTUAL_ENV/bin/activate" ] ; then
+        source "$VIRTUAL_ENV/bin/activate"
+    elif [ -f "$PWD/venv/bin/activate" ] ; then
+        source "$PWD/venv/bin/activate"
+    else
+        echo "Can't find virtual environment"
+        return 1
+    fi
 }
 
 alias nocolor='sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g ; s/\x0f//g"'
