@@ -1,5 +1,8 @@
 pullsshsock
 
-case $PWD in $HOME/*)
-    HISTFILE="$PWD/.bash_history.$WINDOW"
+SCREEN_PID=$(echo $STY | sed -e 's/\..*//')
+SCREEN_DIR=$(readlink -f /proc/$SCREEN_PID/cwd)
+
+case $SCREEN_DIR in $(readlink -f "$HOME")/*)
+    HISTFILE="$SCREEN_DIR/.bash_history.$WINDOW"
 esac
