@@ -35,6 +35,15 @@ d() {
     colordiff "$@" | $LESS_F -R
 }
 
+find0() {
+    find "$@" -print0
+}
+
+# This is wild! A space in the end makes xargs work with aliases in simple cases, e.g "xargs lh"
+# See https://stackoverflow.com/a/59843665/1635525 and "help alias"
+alias xargs='xargs '
+alias xargs0='xargs -0 '
+
 export EDITOR=vim
 export VISUAL=vim
 
