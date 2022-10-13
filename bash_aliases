@@ -109,17 +109,6 @@ pastecol() {
     paste -d '|' "$@" | column -t -s '|'
 }
 
-vactivate() {
-    if [ -n "$VIRTUAL_ENV" -a -f "$VIRTUAL_ENV/bin/activate" ] ; then
-        source "$VIRTUAL_ENV/bin/activate"
-    elif [ -f "$PWD/venv/bin/activate" ] ; then
-        source "$PWD/venv/bin/activate"
-    else
-        echo "Can't find virtual environment"
-        return 1
-    fi
-}
-
 alias nocolor='sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g ; s/\x0f//g"'
 alias nogarbage='tr -cd "[:print:]\n"'
 
@@ -131,3 +120,28 @@ alias cgidecode='perl -pe '\''s/[?&]/\n/g'\'' | urldecode'
 alias pullrc=". $HOME/.bashrc"
 
 alias dug='( shopt -s dotglob ; du -csh * | grep G )'
+
+# python stuff
+
+epp() {
+    newp="$PWD"
+    if [ ! -z "$1" ] ; then
+        if [ ! -d "$1" ] ; then
+            echo "directory '$1' doesn't exist'"
+            return 1
+        fi
+        newp="$1"
+    fi
+    export PYTHONPATH=$(readlink -f "$newp")
+}
+
+vactivate() {
+    if [ -n "$VIRTUAL_ENV" -a -f "$VIRTUAL_ENV/bin/activate" ] ; then
+        source "$VIRTUAL_ENV/bin/activate"
+    elif [ -f "$PWD/venv/bin/activate" ] ; then
+        source "$PWD/venv/bin/activate"
+    else
+        echo "Can't find virtual environment"
+        return 1
+    fi
+}
