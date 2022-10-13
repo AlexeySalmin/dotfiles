@@ -6,3 +6,9 @@
 	ci = commit
 [push]
 	default = simple
+[pull]
+	rebase = true
+[diff]
+	colorMoved = zebra
+[rebase]
+	autoStash = true
