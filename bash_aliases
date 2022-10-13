@@ -24,7 +24,11 @@ gr() {
 }
 
 gre() {
-    g -r --exclude-dir venv --exclude-dir .svn --exclude-dir .git --exclude "*.pyc" "$@"
+    g -r --exclude-dir venv --exclude-dir .svn --exclude-dir .git --exclude "*.pyc" --exclude "*.min.js" --exclude "*.min.css" --exclude "*.css.map" "$@"
+}
+
+grh() {
+    find $HOME -maxdepth 3 -name '.bash_history*' -print0 | xargs -0 `which grep` --color=always "$@" | $LESS_F -R
 }
 
 d() {
