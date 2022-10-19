@@ -145,3 +145,17 @@ vactivate() {
         return 1
     fi
 }
+
+
+# docker stuff
+
+dshell() {
+    container=${1:-$(docker ps -q -l)}
+    docker exec -it "$container" /bin/bash
+}
+
+drun() {
+    image=${1:-$(docker image ls -q | head -1)}
+    docker run -d "$image" /bin/bash
+    dshell
+}
