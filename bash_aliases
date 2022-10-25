@@ -35,6 +35,10 @@ d() {
     colordiff "$@" | $LESS_F -R
 }
 
+j() {
+    jq --color-output "$@" | $LESS_F -R
+}
+
 find0() {
     find "$@" -print0
 }
