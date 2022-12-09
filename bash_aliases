@@ -227,4 +227,17 @@ drun() {
 }
 
 
+# AWS stuff
+
+awsprofile() {
+    if [ -z "$1" ] ; then
+        echo "AWS_PROFILE=$AWS_PROFILE"
+    else
+        export AWS_PROFILE="$1"
+    fi
+}
+
+complete -W "$(grep '^\[' ~/.aws/credentials | tr -d '[]')" awsprofile
+
+
 # all branch-specific changes should be below this line
