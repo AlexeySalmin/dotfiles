@@ -12,11 +12,23 @@ PROMPT_COMMAND="history -a; history -n"
 alias grep='grep --color=auto'
 export GREP_COLORS='mt=1;32:ne'
 
+alias nocolor='sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g ; s/\x0f//g"'
+alias nogarbage='tr -cd "[:print:]\n"'
+
 LESS_VERSION="$(less --version | sed -n -e 's/less \([0-9]\+\) .*/\1/p')"
 LESS_F=$( [ "$LESS_VERSION" -ge 530 ] && echo "less --quit-if-one-screen" || echo "less")
 
+unalias l
+l() {
+    if [ -t 1 ] ; then
+        $LESS_F -R
+    else
+        nocolor
+    fi
+}
+
 g() {
-    `which grep` --color=always "$@" | $LESS_F -R
+    `which grep` --color=always "$@" | l
 }
 
 gr() {
@@ -33,15 +45,15 @@ gre() {
 }
 
 grh() {
-    find $HOME -maxdepth 3 -name '.bash_history*' -print0 | xargs -0 `which grep` -h --color=always "$@" | sort -u | $LESS_F -R
+    find $HOME -maxdepth 3 -name '.bash_history*' -print0 | xargs -0 `which grep` -h --color=always "$@" | sort -u | l
 }
 
 d() {
-    colordiff "$@" | $LESS_F -R
+    colordiff "$@" | l
 }
 
 j() {
-    jq --color-output "$@" | $LESS_F -R
+    jq --color-output "$@" | l
 }
 
 dj() {
@@ -50,7 +62,7 @@ dj() {
         args="$args $1"
         shift
     done
-    colordiff $args <(jq . "$1") <(jq . "$2") | $LESS_F -R
+    colordiff $args <(jq . "$1") <(jq . "$2") | l
 }
 
 dsorted() {
@@ -59,7 +71,7 @@ dsorted() {
         args="$args $1"
         shift
     done
-    colordiff $args <(sort "$1") <(sort "$2") | $LESS_F -R
+    colordiff $args <(sort "$1") <(sort "$2") | l
 }
 
 find0() {
@@ -125,7 +137,7 @@ ssh-persist() {
 }
 
 svndiff() {
-    svn diff --diff-cmd=colordiff "$@" | $LESS_F -R
+    svn diff --diff-cmd=colordiff "$@" | l
 }
 
 svninf() {
@@ -153,9 +165,6 @@ paste2file() {
     cat > "$1"
     stty -cbreak
 }
-
-alias nocolor='sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g ; s/\x0f//g"'
-alias nogarbage='tr -cd "[:print:]\n"'
 
 alias urlencode='perl -pe '\''s/([^A-Za-z0-9\n])/sprintf("%%%02X", ord($1))/seg'\'
 alias urldecode='perl -pe '\''s/\+/ /g; s/%([[:xdigit:]]{2})/chr(hex($1))/ge'\'
