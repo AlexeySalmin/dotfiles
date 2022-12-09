@@ -23,3 +23,6 @@ endif
 
 set showcmd         " Show (partial) command in status line.
 set showmatch       " Show matching brackets.
+
+" TODO replace with the DeleteTrailingWhitespace plugin
+autocmd BufWritePre * :%s/\s\+$//e
