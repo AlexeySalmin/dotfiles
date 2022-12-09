@@ -44,6 +44,24 @@ j() {
     jq --color-output "$@" | $LESS_F -R
 }
 
+dj() {
+    args=
+    while [[ $1 = -* ]] ; do
+        args="$args $1"
+        shift
+    done
+    colordiff $args <(jq . "$1") <(jq . "$2") | $LESS_F -R
+}
+
+dsorted() {
+    args=
+    while [[ $1 = -* ]] ; do
+        args="$args $1"
+        shift
+    done
+    colordiff $args <(sort "$1") <(sort "$2") | $LESS_F -R
+}
+
 find0() {
     find "$@" -print0
 }
