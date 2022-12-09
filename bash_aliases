@@ -23,12 +23,17 @@ gr() {
     g -r "$@"
 }
 
+GRE_EXCLUDE='--exclude *.pyc --exclude *.min.js --exclude *.min.css --exclude *.css.map --exclude *.log'
+GRE_EXCLUDE_DIR='--exclude-dir venv --exclude-dir node_modules --exclude-dir .svn --exclude-dir .git'
 gre() {
-    g -r --exclude-dir venv --exclude-dir .svn --exclude-dir .git --exclude "*.pyc" --exclude "*.min.js" --exclude "*.min.css" --exclude "*.css.map" "$@"
+    # Need "set -f" to disable glob expansion for the "*.pyc" and other exclude patterns.
+    # But we do need the word splitting though, this is why simple quoting "$GRE_EXCLUDE" won't work.
+    # And you still can do the "gre *.txt" because the glob expansions happens earlier.
+    (set -f; g -r $GRE_EXCLUDE $GRE_EXCLUDE_DIR "$@")
 }
 
 grh() {
-    find $HOME -maxdepth 3 -name '.bash_history*' -print0 | xargs -0 `which grep` --color=always "$@" | $LESS_F -R
+    find $HOME -maxdepth 3 -name '.bash_history*' -print0 | xargs -0 `which grep` -h --color=always "$@" | sort -u | $LESS_F -R
 }
 
 d() {
