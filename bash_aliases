@@ -168,6 +168,12 @@ alias dug='( shopt -s dotglob ; du -csh * | grep G )'
 
 # python stuff
 
+# to avoid misuse in debian/ubuntu
+python() {
+    echo "Use python3"
+    false
+}
+
 epp() {
     newp="$PWD"
     if [ ! -z "$1" ] ; then
@@ -180,7 +186,18 @@ epp() {
     export PYTHONPATH=$(readlink -f "$newp")
 }
 
+vhich() {
+    echo VIRTUAL_ENV=$VIRTUAL_ENV
+}
+
 vactivate() {
+    if [ ! -z "$1" ] ; then
+        if [ ! -d "$1" ] ; then
+            echo "directory '$1' doesn't exist'"
+            return 1;
+        fi
+        export VIRTUAL_ENV="$1"
+    fi
     if [ -n "$VIRTUAL_ENV" -a -f "$VIRTUAL_ENV/bin/activate" ] ; then
         source "$VIRTUAL_ENV/bin/activate"
     elif [ -f "$PWD/venv/bin/activate" ] ; then
@@ -189,6 +206,10 @@ vactivate() {
         echo "Can't find virtual environment"
         return 1
     fi
+}
+
+mkvenv() {
+    python3 -m venv ./venv && vactivate ./venv && vhich
 }
 
 
