@@ -136,6 +136,24 @@ pastecol() {
     paste -d '|' "$@" | column -t -s '|'
 }
 
+# https://stackoverflow.com/a/20401674/1635525
+faketty() {
+    script --quiet --flush --return --command "$(printf "%q " "$@")" /dev/null
+}
+
+# sometimes loses random chars in the middle??
+# better to use xsel when available
+paste2file() {
+    if [ -z "$1" ] ; then
+        echo "Empty filename"
+        return 1
+    fi
+    echo "Use Ctrl+C after a newline to end the input"
+    stty cbreak
+    cat > "$1"
+    stty -cbreak
+}
+
 alias nocolor='sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g ; s/\x0f//g"'
 alias nogarbage='tr -cd "[:print:]\n"'
 
