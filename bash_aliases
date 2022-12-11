@@ -248,5 +248,6 @@ awsprofile() {
 
 complete -W "$(grep '^\[' ~/.aws/credentials | tr -d '[]')" awsprofile
 
+alias awsssm='aws ssm start-session --target '
 
 # all branch-specific changes should be below this line
