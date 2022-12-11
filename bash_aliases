@@ -36,7 +36,7 @@ gr() {
 }
 
 GRE_EXCLUDE='--exclude *.pyc --exclude *.min.js --exclude *.min.css --exclude *.css.map --exclude *.log'
-GRE_EXCLUDE_DIR='--exclude-dir venv --exclude-dir node_modules --exclude-dir .svn --exclude-dir .git'
+GRE_EXCLUDE_DIR='--exclude-dir venv --exclude-dir node_modules --exclude-dir gems --exclude-dir .svn --exclude-dir .git'
 gre() {
     # Need "set -f" to disable glob expansion for the "*.pyc" and other exclude patterns.
     # But we do need the word splitting though, this is why simple quoting "$GRE_EXCLUDE" won't work.
