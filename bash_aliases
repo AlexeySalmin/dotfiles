@@ -222,7 +222,12 @@ vactivate() {
 }
 
 mkvenv() {
-    python3 -m venv ./venv && vactivate ./venv && vhich
+    PYTHON=${1:-python3}
+    $PYTHON -m venv --prompt $(basename $PWD) ./venv \
+        && vactivate ./venv \
+        && vhich \
+        && pip3 install --upgrade pip \
+        && python3 --version
 }
 
 
