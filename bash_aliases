@@ -252,6 +252,11 @@ awsprofile() {
     else
         export AWS_PROFILE="$1"
     fi
+    if ! aws sts get-caller-identity >/dev/null 2>&1 ; then
+        aws sso login
+    fi
+    echo AWS_PROFILE="$AWS_PROFILE"
+    aws sts get-caller-identity
 }
 
 complete -W "$(grep '^\[' ~/.aws/credentials | tr -d '[]')" awsprofile
