@@ -240,8 +240,7 @@ dshell() {
 
 drun() {
     image=${1:-$(docker image ls -q | head -1)}
-    docker run -d "$image" /bin/bash
-    dshell
+    docker run -d "$image" sleep inf && dshell
 }
 
 
