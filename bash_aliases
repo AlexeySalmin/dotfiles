@@ -60,22 +60,25 @@ j() {
     jq --color-output "$@" | l
 }
 
-dj() {
-    args=
-    while [[ $1 = -* ]] ; do
-        args="$args $1"
+# Usage:
+#   diffcmd one two -u -- jq .
+#   diffcmd one two -u -- sort
+#   diffcmd one two -- sed -e 's/#.*//'
+diffcmd() {
+    local diffargs
+    local extcmd
+    local left
+    local right
+    left="$1" ; shift
+    right="$1" ; shift
+    while [[ $1 != '--' ]]; do
+        diffargs+=("$1")
         shift
     done
-    colordiff $args <(jq . "$1") <(jq . "$2") | l
-}
+    shift # skip the sentinel
+    extcmd=("$@") # command with args
 
-dsorted() {
-    args=
-    while [[ $1 = -* ]] ; do
-        args="$args $1"
-        shift
-    done
-    colordiff $args <(sort "$1") <(sort "$2") | l
+    d "${diffargs[@]}" <("${extcmd[@]}" "$left") <("${extcmd[@]}" "$right")
 }
 
 find0() {
