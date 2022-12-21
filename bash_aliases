@@ -56,6 +56,10 @@ d() {
     colordiff "$@" | l
 }
 
+wd() {
+    wdiff -n "$@" | d
+}
+
 j() {
     jq --color-output "$@" | l
 }
