@@ -108,6 +108,7 @@ alias lth='ls -lth'
 alias lth20='ls -lth | head -20'
 
 alias dfh='df -h'
+alias bc='bc -l'
 
 addpath() {
     if [ ! -d "$1" ] ; then
