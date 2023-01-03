@@ -7,8 +7,9 @@ colo torte
 
 set statusline=%F%m%r%h%w\ [%{&ff}]\ [%Y]\ [%LL]\ %=\ [0x\%02.2B]\ [%04l,%03v]\ [%02p%%]
 set laststatus=2
+set number
 
-filetype plugin indent on 
+filetype plugin indent on
 
 set expandtab
 set tabstop=4
