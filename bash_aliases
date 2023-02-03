@@ -68,21 +68,30 @@ j() {
 #   diffcmd one two -u -- jq .
 #   diffcmd one two -u -- sort
 #   diffcmd one two -- sed -e 's/#.*//'
+#   diffcmd dir1 dir2 -- find {} -type f -printf "%P\n"
 diffcmd() {
     local diffargs
     local extcmd
+    local extcmdargs
     local left
     local right
     left="$1" ; shift
     right="$1" ; shift
-    while [[ $1 != '--' ]]; do
+    while [[ $1 != '--' && $1 != '' ]]; do
         diffargs+=("$1")
         shift
     done
-    shift # skip the sentinel
-    extcmd=("$@") # command with args
+    shift # skip the "--"
 
-    d "${diffargs[@]}" <("${extcmd[@]}" "$left") <("${extcmd[@]}" "$right")
+    while [[ $1 != '{}' && $1 != '' ]]; do
+        extcmd+=("$1")
+        shift
+    done
+    shift # skip the "{}"
+
+    extcmdargs=("$@") # suffix args
+
+    d "${diffargs[@]}" <("${extcmd[@]}" "$left" "${extcmdargs[@]}") <("${extcmd[@]}" "$right" "${extcmdargs[@]}")
 }
 
 find0() {
