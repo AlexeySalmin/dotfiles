@@ -49,7 +49,7 @@ grepy() {
 }
 
 grh() {
-    find $HOME -maxdepth 3 -name '.bash_history*' -print0 | xargs -0 `which grep` -h --color=always "$@" | sort -u | l
+    find $HOME -maxdepth 3 -name '.bash_history*' -print0 | xargs -0 `which grep` -h --color=always "$@" | sort | uniq -c | sort -n -r | l
 }
 
 d() {
