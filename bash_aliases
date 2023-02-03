@@ -265,16 +265,45 @@ mkvenv() {
 
 # docker stuff
 
+dlast() {
+    docker image ls -q | head -1
+}
+
+drunning() {
+    docker ps -q -l
+}
+
 dshell() {
-    container=${1:-$(docker ps -q -l)}
+    container=${1:-$(drunning)}
     docker exec -it "$container" /bin/bash
 }
 
 drun() {
-    image=${1:-$(docker image ls -q | head -1)}
+    image=${1:-$(dlast)}
     docker run -d "$image" sleep inf && dshell
 }
 
+# https://stackoverflow.com/questions/21200304/docker-how-to-show-the-diffs-between-2-images
+ddiff() {
+    cmd="$1"; shift
+    image1="$1"; shift
+    image2="$1"; shift
+    dir="${1:-/}"
+    out1="/tmp/dockerfiles.$image1.txt"
+    out2="/tmp/dockerfiles.$image2.txt"
+    docker run "$image1" bash -c "find $dir -xdev -type f | sort | $cmd" > "$out1"
+    docker run "$image2" bash -c "find $dir -xdev -type f | sort | $cmd" > "$out2"
+    d "$out1" "$out2"
+    echo d "$out1" "$out2"
+}
+
+dlistdiff() {
+    ddiff "cat" "$@"
+}
+
+dhashdiff() {
+    ddiff "xargs -L 1 sha265sum"
+}
 
 # AWS stuff
 
