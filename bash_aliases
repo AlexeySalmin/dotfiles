@@ -112,9 +112,18 @@ alias xargs0='xargs -0 '
 export EDITOR=vim
 export VISUAL=vim
 
-alias lh='ls -lh'
-alias lth='ls -lth'
-alias lth20='ls -lth | head -20'
+unalias lh lth lth20 2>/dev/null
+lh() {
+    ls -lh "$@" --color=always | l
+}
+
+lth() {
+    ls -lth "$@" --color=always | l
+}
+
+lth20() {
+    ls -lth "$@" --color=always | head -20
+}
 
 alias dfh='df -h'
 alias bc='bc -l'
