@@ -21,7 +21,7 @@ LESS_F=$( [ "$LESS_VERSION" -ge 530 ] && echo "less --quit-if-one-screen" || ech
 unalias l
 l() {
     if [ -t 1 ] ; then
-        $LESS_F -R
+        $LESS_F -R "$@"
     else
         nocolor
     fi
