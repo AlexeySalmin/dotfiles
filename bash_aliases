@@ -223,6 +223,11 @@ python() {
     false
 }
 
+# https://stackoverflow.com/a/41386937/1635525
+pyclean () {
+    find . -type f -name '*.py[co]' -delete -o -type d -name __pycache__ -delete
+}
+
 epp() {
     newp="$PWD"
     if [ ! -z "$1" ] ; then
