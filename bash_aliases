@@ -48,6 +48,10 @@ grepy() {
     (set -f; g -r $GRE_EXCLUDE_DIR --include '*.py' "$@")
 }
 
+x0g() {
+    xargs -0 `which grep` --color=always "$@" | l
+}
+
 grh() {
     find $HOME -maxdepth 3 -name '.bash_history*' -print0 | xargs -0 `which grep` -h --color=always "$@" | sort | uniq -c | sort -n -r | l
 }
