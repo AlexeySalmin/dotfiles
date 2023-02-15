@@ -13,6 +13,9 @@
 	logs = log --name-status
 	staged = diff --staged
 	unstage = reset --
+	track = add -N
+	addup = add -u
+	need2push = log --branches --not --remotes
 [push]
 	default = simple
 [pull]
