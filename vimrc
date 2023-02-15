@@ -16,6 +16,8 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 
+set viminfo='100,<1000,s100
+
 " Uncomment the following to have Vim jump to the last position when
 " reopening a file
 if has("autocmd")
