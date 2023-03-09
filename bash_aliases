@@ -188,6 +188,10 @@ pastecol() {
     paste -d '|' "$@" | column -t -s '|'
 }
 
+columnt() {
+    column -t -s "$(echo -e '\t')" "$@"
+}
+
 # https://stackoverflow.com/a/20401674/1635525
 faketty() {
     script --quiet --flush --return --command "$(printf "%q " "$@")" /dev/null
