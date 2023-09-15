@@ -104,6 +104,14 @@ diffcmd() {
     d "${diffargs[@]}" <("${extcmd[@]}" "$left" "${extcmdargs[@]}") <("${extcmd[@]}" "$right" "${extcmdargs[@]}")
 }
 
+dsorted() {
+    diffcmd "$@" -u -- sort
+}
+
+duniqsorted() {
+    diffcmd "$@" -u -- sort -u
+}
+
 find0() {
     find "$@" -print0
 }
