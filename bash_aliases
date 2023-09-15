@@ -251,12 +251,34 @@ alias pullrc=". $HOME/.bashrc"
 
 alias dug='( shopt -s dotglob ; du -csh * | grep G )'
 
+withlog() {
+    mkdir -p "$HOME/logs"
+    logfile="$HOME/logs/${1}_$(date +'%Y%m%dT%H%M%S%z').log"
+
+    echo -n "CMDLINE: " | tee -a "$logfile"
+    printf "%q " "$@" | tee -a "$logfile"
+    echo -e "\nSTARTED: $(date --iso-8601=seconds)" | tee -a "$logfile"
+    echo -e "\n" | tee -a "$logfile"
+    "$@" |& tee -a "$logfile"
+
+    echo -e "\n\nFINISHED: $(date --iso-8601=seconds)" | tee -a "$logfile"
+    echo "LOGFILE: $logfile" | tee -a "$logfile"
+}
+
+readlog() {
+    l "$HOME/logs/$(ls -t "$HOME/logs" | head -1)"
+}
+
 # python stuff
 
 # to avoid misuse in debian/ubuntu
 python() {
     echo "Use python3"
     false
+}
+
+p3() {
+    withlog python3 -u "$@"
 }
 
 # https://stackoverflow.com/a/41386937/1635525
