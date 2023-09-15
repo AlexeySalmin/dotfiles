@@ -15,6 +15,7 @@
 	unstage = reset --
 	track = add -N
 	addup = add -u
+	a = add -u
 	need2push = log --branches --not --remotes
 [push]
 	default = simple
@@ -30,3 +31,5 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+[pager]
+	status = true
