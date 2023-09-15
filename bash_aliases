@@ -119,7 +119,11 @@ find0() {
 f() {
     dir=$1; shift
     name=$1; shift
-    find "$dir" -name "*${name}*" $@
+    find "$dir" -name "*${name}*" "$@"
+}
+
+f0() {
+    f "$@" -print0
 }
 
 # This is wild! A space in the end makes xargs work with aliases in simple cases, e.g "xargs lh"
