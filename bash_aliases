@@ -150,6 +150,18 @@ lth20() {
 alias dfh='df -h'
 alias bc='bc -l'
 
+wcu() {
+    sort -u "$@" | wc -l
+}
+
+sucs() {
+    sort "$@" | uniq -c | sort -n
+}
+
+pstree() {
+    $(which pstree) $@ | l
+}
+
 addpath() {
     if [ ! -d "$1" ] ; then
         echo "directory '$1' doesn't exist'"
