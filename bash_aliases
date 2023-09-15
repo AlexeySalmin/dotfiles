@@ -14,6 +14,12 @@ export GREP_COLORS='mt=1;32:ne'
 
 alias nocolor='sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g ; s/\x0f//g"'
 alias nogarbage='tr -cd "[:print:]\n"'
+alias lc='tr A-Z a-z'
+alias uc='tr a-z A-Z'
+
+trn() {
+    tr "$@" '\n'
+}
 
 LESS_VERSION="$(less --version | sed -n -e 's/less \([0-9]\+\) .*/\1/p')"
 LESS_F=$( [ "$LESS_VERSION" -ge 530 ] && echo "less --quit-if-one-screen" || echo "less")
