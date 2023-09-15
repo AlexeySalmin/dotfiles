@@ -1,6 +1,6 @@
 termcapinfo xterm*|rxvt*|kterm*|Eterm* 'hs:ts=\E]0;:fs=\007:ds=\E]0;\007'
 defhstatus "^EH ^ES#^En (^Et) | screen on $USER@^EH"
 hardstatus off
-defscrollback 10000
+defscrollback 100000
 
 bind R eval "source $HOME/.screenrc" "echo '.screenrc reloaded'"
