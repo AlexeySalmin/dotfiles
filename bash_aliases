@@ -189,6 +189,8 @@ mkscreen() {
     fi
 }
 
+complete -W "$(ls $HOME/screen)" mkscreen
+
 alias slist='screen -list'
 
 pushsshsock() {
