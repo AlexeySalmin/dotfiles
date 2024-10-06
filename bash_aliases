@@ -464,7 +464,8 @@ awsprofile() {
     aws sts get-caller-identity
 }
 
-complete -W "$(grep '^\[' ~/.aws/credentials | tr -d '[]')" awsprofile
+AWS_PROFILE_COMPLETE=$(grep -h '\[' ~/.aws/config ~/.aws/credentials | sed -e 's/.* //;' | tr -d '[]' | sort -u)
+complete -W "$AWS_PROFILE_COMPLETE" awsprofile
 
 unalias awsssm 2>/dev/null
 awsssm() {
