@@ -282,13 +282,22 @@ alias dug='( shopt -s dotglob ; du -csh -- * | grep -P "G\t" )'
 alias dus='du -sh * | sort -h -r | l'
 
 withlog() {
+    if [[ ! -z "$2" && "$2" != -* ]] ; then
+        cmd_name="${1}_${2}" # e.g. python script name or terraform command name
+    else
+        cmd_name="${1}"
+    fi
+    cmd_name=${cmd_name//[^a-zA-Z0-9_-.]/_}
+
     mkdir -p "$HOME/logs"
-    logfile="$HOME/logs/${1}_$(date +'%Y%m%dT%H%M%S%z').log"
+    logfile="$HOME/logs/${cmd_name}_$(date +'%Y%m%dT%H%M%S%z').log"
 
     echo -n "CMDLINE: " | tee -a "$logfile"
     printf "%q " "$@" | tee -a "$logfile"
-    echo -e "\nSTARTED: $(date --iso-8601=seconds)" | tee -a "$logfile"
-    echo -e "\n" | tee -a "$logfile"
+    echo -ne "\nPWD:     $PWD" | tee -a "$logfile"
+    echo -ne "\nLOGFILE: $logfile" | tee -a "$logfile"
+    echo -ne "\nSTARTED: $(date --iso-8601=seconds)\n\n" | tee -a "$logfile"
+
     "$@" |& tee -a "$logfile"
 
     echo -e "\n\nFINISHED: $(date --iso-8601=seconds)" | tee -a "$logfile"
