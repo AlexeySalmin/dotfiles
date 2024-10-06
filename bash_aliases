@@ -278,7 +278,8 @@ alias cgidecode='perl -pe '\''s/[?&]/\n/g'\'' | urldecode'
 
 alias pullrc=". $HOME/.bashrc"
 
-alias dug='( shopt -s dotglob ; du -csh * | grep G )'
+alias dug='( shopt -s dotglob ; du -csh -- * | grep -P "G\t" )'
+alias dus='du -sh * | sort -h -r | l'
 
 withlog() {
     mkdir -p "$HOME/logs"
