@@ -150,6 +150,7 @@ f0() {
 # See https://stackoverflow.com/a/59843665/1635525 and "help alias"
 alias xargs='xargs '
 alias xargs0='xargs -0 '
+alias xargsn='xargs -d "\n"'
 
 export EDITOR=vim
 export VISUAL=vim
@@ -172,6 +173,10 @@ alias bc='bc -l'
 
 wcu() {
     sort -u "$@" | wc -l
+}
+
+wcl() {
+    wc -l "$@"
 }
 
 sucs() {
