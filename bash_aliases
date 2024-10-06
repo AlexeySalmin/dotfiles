@@ -59,8 +59,17 @@ x0g() {
     xargs -0 `which grep` --color=always "$@" | l
 }
 
+grhw() {
+    where=$1; shift
+    find "$where" -maxdepth 3 -name '.bash_history*' -print0 | xargs -0 `which grep` -h --color=always "$@" | sort | uniq -c | sort -n -r | l
+}
+
 grh() {
-    find $HOME -maxdepth 3 -name '.bash_history*' -print0 | xargs -0 `which grep` -h --color=always "$@" | sort | uniq -c | sort -n -r | l
+    grhw "$HOME" "$@"
+}
+
+grhs() {
+    find "$SCREEN_DIR" -maxdepth 1 -name '.bash_history*' -print0 | xargs -0 `which grep` --color=always "$@"
 }
 
 d() {
