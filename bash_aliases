@@ -73,11 +73,17 @@ grhs() {
 }
 
 d() {
+    # The 'diff' command fails when run by mistake without arguments but 'colordiff' does not.
+    # This is understandable (colordiff can color the stdin) but annoying, so we'll fail explicitly here.
+    if [ -z "$1" ] ; then
+        echo "d: missing operands"
+        return 1
+    fi
     colordiff "$@" | l
 }
 
 wd() {
-    wdiff -n "$@" | d
+    wdiff -n "$@" | colordiff | l
 }
 
 j() {
