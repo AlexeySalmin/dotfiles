@@ -308,6 +308,17 @@ readlog() {
     l "$HOME/logs/$(ls -t "$HOME/logs" | head -1)"
 }
 
+b64cert2pem()
+{
+    echo '-----BEGIN CERTIFICATE-----'
+    cat
+    echo '-----END CERTIFICATE-----'
+}
+
+b64certdecode() {
+	b64cert2pem | openssl x509 -text -noout | l
+}
+
 # python stuff
 
 # to avoid misuse in debian/ubuntu
