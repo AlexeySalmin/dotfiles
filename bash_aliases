@@ -386,22 +386,45 @@ pydict2json() {
 
 # docker stuff
 
+dps() {
+    docker ps "$@" | l
+}
+
+dim() {
+    docker image ls | l
+}
+
 dlast() {
     docker image ls -q | head -1
 }
 
 drunning() {
-    docker ps -q -l
+    docker ps -q | head -1
 }
 
 dshell() {
     container=${1:-$(drunning)}
-    docker exec -it "$container" /bin/bash
+    docker exec -it "$container" env TERM=xterm-256color /bin/bash
 }
 
 drun() {
     image=${1:-$(dlast)}
-    docker run -d "$image" sleep inf && dshell
+    docker run -d --init "$image" sleep inf && dshell
+}
+
+drundev() {
+    image=${1:-$(dlast)}
+    docker run -d --init --network=host --mount "type=bind,source=$HOME,target=/host_home" "$image" sleep inf && dshell
+}
+
+dstop() {
+    container=${1:-$(drunning)}
+    docker stop "$container"
+}
+
+dsetup() {
+    container=${1:-$(drunning)}
+    docker exec -it "$container" bash -c "apt-get update && apt-get -y install vim less iproute2 strace psmisc"
 }
 
 # https://stackoverflow.com/questions/21200304/docker-how-to-show-the-diffs-between-2-images
@@ -423,7 +446,7 @@ dlistdiff() {
 }
 
 dhashdiff() {
-    ddiff "xargs -L 1 sha265sum"
+    ddiff "xargs -n 1 --delimiter '\n' md5sum" "$@"
 }
 
 # AWS stuff
