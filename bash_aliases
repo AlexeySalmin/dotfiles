@@ -379,6 +379,10 @@ mkvenv() {
         && python3 --version
 }
 
+pydict2json() {
+    python3 -c 'import json; print(json.dumps(eval(input())))' | j . "$@"
+}
+
 
 # docker stuff
 
