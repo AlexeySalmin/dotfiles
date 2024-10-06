@@ -128,6 +128,10 @@ duniqsorted() {
     diffcmd "$@" -u -- sort -u
 }
 
+dj() {
+    diffcmd "$@" -u -- jq .
+}
+
 find0() {
     find "$@" -print0
 }
