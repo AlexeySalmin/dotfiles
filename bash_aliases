@@ -249,6 +249,10 @@ columnt() {
     column -t -s "$(echo -e '\t')" "$@"
 }
 
+xselcol() {
+    (xsel -b; echo) | columnt | tee /dev/stderr | xsel -b
+}
+
 # https://stackoverflow.com/a/20401674/1635525
 faketty() {
     script --quiet --flush --return --command "$(printf "%q " "$@")" /dev/null
