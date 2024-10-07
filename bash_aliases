@@ -214,7 +214,7 @@ mkscreen() {
     fi
 }
 
-complete -W "$(ls $HOME/screen)" mkscreen
+complete -W "$( [ -d $HOME/screen ] && ls $HOME/screen)" mkscreen
 
 alias slist='screen -list'
 
@@ -464,7 +464,15 @@ awsprofile() {
     aws sts get-caller-identity
 }
 
-AWS_PROFILE_COMPLETE=$(grep -h '\[' ~/.aws/config ~/.aws/credentials | sed -e 's/.* //;' | tr -d '[]' | sort -u)
+file_or_null() {
+    if [ -f "$1" ] ; then
+        echo "$1"
+    else
+        echo "/dev/null"
+    fi
+}
+
+AWS_PROFILE_COMPLETE=$(grep -h '\[' $(file_or_null ~/.aws/config) $(file_or_null ~/.aws/credentials) | sed -e 's/.* //;' | tr -d '[]' | sort -u)
 complete -W "$AWS_PROFILE_COMPLETE" awsprofile
 
 unalias awsssm 2>/dev/null
