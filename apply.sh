@@ -37,7 +37,7 @@ link_file() {
         $RUN mv "$dst" "$BACKUP/"
     fi
     d=`dirname "$dst"`
-    [ -d "$d" ] || $RUN mkdir "$d"
+    [ -d "$d" ] || $RUN mkdir -p "$d"
     $RUN ln -r -s "$src" "$dst"
 }
 
